@@ -206,6 +206,7 @@ class NewSocialViewController: UIViewController, UITextViewDelegate {
     }
     
     @objc func addButtonClicked() -> Void{
+        //currently has bug that only allows user to store one image
         if let img = eventImage.image {
             let imageData = UIImageJPEGRepresentation(img, 0.9)
             let key = Database.database().reference().childByAutoId().key

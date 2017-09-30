@@ -105,18 +105,30 @@ class FeedViewController: UIViewController {
     func fetchEvents(withBlock: @escaping () -> ()) {
         //TODO: Implement a method to fetch events with Firebase!
         let ref = Database.database().reference()
+        
+        var indexPaths = Array<IndexPath>()
+        
         ref.child("Events").observe(.childAdded, with: { (snapshot) in
             let event = Event(id: snapshot.key, eventDict: (snapshot.value! as? [String : Any])!)
             FeedViewController.events.append(event)
-            var indexPaths = Array<IndexPath>()
-            let index = FeedViewController.events.index(where: {$0.id == event.id})
-            let indexPath = IndexPath(item: index!, section: 0)
+            //batch updates has some problems 
+            var index = FeedViewController.events.index(where: {$0.id == event.id})
+            
+            var indexPath: IndexPath!
+            
+            if let i = index {
+                indexPath = IndexPath(item: i, section: 0)
+            }
+            else {
+                index = 0
+                indexPath = IndexPath(item: 0, section: 0)
+            }
             indexPaths.append(indexPath)
             
             DispatchQueue.main.async {
                 FeedViewController.eventCollectionView.performBatchUpdates({ () -> Void in
                     FeedViewController.eventCollectionView.insertItems(at: indexPaths)
-                    self.itemCount = indexPaths.count
+                    self.itemCount += indexPaths.count
                 }, completion: nil)
             }
             withBlock()
@@ -159,8 +171,10 @@ extension FeedViewController: UICollectionViewDelegate, UICollectionViewDataSour
         cell.eventTitle.text = eventInQuestion.title!
         cell.memberName.text = "By: \(eventInQuestion.member!)"
         cell.rsvpText.text = "\(eventInQuestion.rsvpCount!) interested"
-        eventInQuestion.getEventImage {
-            cell.eventImage.image = eventInQuestion.image!
+        do {
+            try cell.eventImage.image = UIImage(data: Data(contentsOf: URL(string: eventInQuestion.imageUrl)!))
+        } catch {
+            cell.eventImage.image = #imageLiteral(resourceName: "skydiving")
         }
         return cell
     }
