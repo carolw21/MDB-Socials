@@ -213,8 +213,9 @@ class NewSocialViewController: UIViewController, UITextViewDelegate {
             let metadata = StorageMetadata()
             metadata.contentType = "image/jpeg"
             
-            storage.putData(imageData!, metadata: metadata).observe(.success) { (snapshot) in
-                let event = ["title": self.nameTextField.text!, "imageUrl": FeedViewController.currentUser.id, "member": FeedViewController.currentUser.name!,
+            storage.putData(imageData!, metadata: metadata) { metadata, error in
+                let downloadUrl = metadata!.downloadURL()?.absoluteString
+                let event = ["title": self.nameTextField.text!, "imageUrl": downloadUrl, "member": FeedViewController.currentUser.name!,
                              "rsvpCount": 1, "rsvpArray": [FeedViewController.currentUser.name!], "descriptionText": self.descriptionTextView.text!, "date": self.textDatePicker.text!] as [String : Any]
                 let childUpdates = ["/Events/\(key)": event]
                 Database.database().reference().updateChildValues(childUpdates)
