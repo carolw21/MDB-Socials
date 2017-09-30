@@ -159,7 +159,7 @@ extension FeedViewController: UICollectionViewDelegate, UICollectionViewDataSour
         return 1
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return itemCount
+        return FeedViewController.events.count //itemCount ?
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = FeedViewController.eventCollectionView.dequeueReusableCell(withReuseIdentifier: "event", for: indexPath) as! EventCollectionViewCell
@@ -171,6 +171,7 @@ extension FeedViewController: UICollectionViewDelegate, UICollectionViewDataSour
         cell.eventTitle.text = eventInQuestion.title!
         cell.memberName.text = "By: \(eventInQuestion.member!)"
         cell.rsvpText.text = "\(eventInQuestion.rsvpCount!) interested"
+        print(eventInQuestion.imageUrl)
         do {
             try cell.eventImage.image = UIImage(data: Data(contentsOf: URL(string: eventInQuestion.imageUrl)!))
         } catch {
