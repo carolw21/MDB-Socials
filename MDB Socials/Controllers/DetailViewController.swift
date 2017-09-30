@@ -55,7 +55,6 @@ class DetailViewController: UIViewController {
     
     func setupEventImage() {
         eventImage = UIImageView(frame: CGRect(x: 10, y: goBackButton.frame.maxY + 20, width: 150, height: 150))
-        eventImage.clipsToBounds = true
         eventImage.contentMode = .scaleAspectFit
         eventImage.layer.cornerRadius = 8.0
         eventImage.clipsToBounds = true
@@ -64,7 +63,7 @@ class DetailViewController: UIViewController {
     }
     
     func setupEventText() {
-        eventTitle = UILabel(frame: CGRect(x: eventImage.frame.maxX + 8, y: eventImage.frame.minY, width: view.frame.width * 0.7, height: 30))
+        eventTitle = UILabel(frame: CGRect(x: eventImage.frame.maxX + 10, y: eventImage.frame.minY, width: view.frame.width * 0.7, height: 30))
         eventTitle.textColor = UIColor.black
         eventTitle.font = UIFont(name: "AvenirNext-Regular", size: 23)
         eventTitle.text = event.title!
@@ -72,7 +71,7 @@ class DetailViewController: UIViewController {
     }
     
     func setupDateText() {
-        eventDate = UILabel(frame: CGRect(x: eventImage.frame.maxX + 8, y: eventTitle.frame.maxY + 5, width: view.frame.width * 0.7, height: 30))
+        eventDate = UILabel(frame: CGRect(x: eventImage.frame.maxX + 10, y: eventTitle.frame.maxY + 5, width: view.frame.width * 0.7, height: 30))
         eventDate.textColor = UIColor.black
         eventDate.font = UIFont(name: "AvenirNext-Regular", size: 18)
         eventDate.text = event.date!
@@ -80,7 +79,7 @@ class DetailViewController: UIViewController {
     }
     
     func setupMemberText() {
-        memberName = UILabel(frame: CGRect(x: eventImage.frame.maxX + 8, y: eventDate.frame.maxY + 10, width: view.frame.width * 0.5, height: 30))
+        memberName = UILabel(frame: CGRect(x: eventImage.frame.maxX + 10, y: eventDate.frame.maxY + 10, width: view.frame.width * 0.5, height: 30))
         memberName.font = UIFont(name: "AvenirNext-Regular", size: 18)
         memberName.textColor = UIColor.black
         memberName.text = "by " + event.member!
@@ -88,7 +87,7 @@ class DetailViewController: UIViewController {
     }
     
     func setupDescriptionText() {
-        descriptionText = UILabel(frame: CGRect(x: eventImage.frame.maxX + 8, y: memberName.frame.maxY + 20, width: view.frame.width * 0.6, height: 30))
+        descriptionText = UILabel(frame: CGRect(x: eventImage.frame.maxX + 10, y: memberName.frame.maxY + 20, width: view.frame.width * 0.6, height: 30))
         descriptionText.font = UIFont(name: "AvenirNext-Regular", size: 18)
         descriptionText.textColor = UIColor.black
         descriptionText.text = event.descriptionText!
@@ -96,7 +95,7 @@ class DetailViewController: UIViewController {
     }
     
     func setupRsvpText() {
-        rsvpText = UILabel(frame: CGRect(x: eventImage.frame.minX, y: descriptionText.frame.maxY + 35, width: view.frame.width * 0.3, height: 30))
+        rsvpText = UILabel(frame: CGRect(x: eventImage.frame.minX + 10, y: descriptionText.frame.maxY + 35, width: view.frame.width * 0.3, height: 30))
         rsvpText.textColor = UIColor.black
         rsvpText.font = UIFont(name: "AvenirNext-Regular", size: 18)
         rsvpText.adjustsFontForContentSizeCategory = true
@@ -128,14 +127,14 @@ class DetailViewController: UIViewController {
         let index = FeedViewController.events.index(where: { $0.id == event.id })
         let interested = FeedViewController.events[index!].rsvpArray.contains((FeedViewController.currentUser?.name)!)
         if !interested {
+            rsvpText.text = "Interested: \(event.rsvpCount!+1)"
             FeedViewController.events[index!].rsvpCount! += 1
-            rsvpText.text = "Interested: \(event.rsvpCount!)"
             interestButton.setTitle("Interested", for: .normal)
             FeedViewController.events[index!].rsvpArray.append((FeedViewController.currentUser?.name)!)
         }
         else {
+            rsvpText.text = "Interested: \(event.rsvpCount!-1)"
             FeedViewController.events[index!].rsvpCount! -= 1
-            rsvpText.text = "Interested: \(event.rsvpCount!)"
             interestButton.setTitle("Mark interested", for: .normal)
             FeedViewController.events[index!].rsvpArray.remove(at: FeedViewController.events[index!].rsvpArray.index(of: (FeedViewController.currentUser.name)!)!)
         }

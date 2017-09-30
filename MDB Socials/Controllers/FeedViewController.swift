@@ -116,7 +116,7 @@ class FeedViewController: UIViewController {
             DispatchQueue.main.async {
                 FeedViewController.eventCollectionView.performBatchUpdates({ () -> Void in
                     FeedViewController.eventCollectionView.insertItems(at: indexPaths)
-                    self.itemCount += indexPaths.count
+                    self.itemCount = indexPaths.count
                 }, completion: nil)
             }
             withBlock()
