@@ -64,24 +64,14 @@ class LoginViewController: UIViewController {
     
     func setupButtons() {
         loginButton = UIButton(frame: CGRect(x: UIScreen.main.bounds.width * 0.15 - 5, y: passwordTextField.frame.maxY + 20, width: 0.35 * UIScreen.main.bounds.width, height: 60))
-        loginButton.layoutIfNeeded()
+        MDBSocialsUtils.defineButtonAttributes(button: loginButton)
         loginButton.setTitle("Log In", for: .normal)
-        loginButton.setTitleColor(.white, for: .normal)
-        loginButton.backgroundColor = Constants.blueBackgroundColor
-        loginButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 18)
-        loginButton.layer.cornerRadius = 8.0
-        loginButton.layer.masksToBounds = true
         loginButton.addTarget(self, action: #selector(loginButtonClicked), for: .touchUpInside)
         self.view.addSubview(loginButton)
         
         signupButton = UIButton(frame: CGRect(x: UIScreen.main.bounds.width * 0.5 + 5, y: passwordTextField.frame.maxY + 20, width: 0.35 * UIScreen.main.bounds.width , height: 60))
-        signupButton.layoutIfNeeded()
+        MDBSocialsUtils.defineButtonAttributes(button: signupButton)
         signupButton.setTitle("Sign Up", for: .normal)
-        signupButton.setTitleColor(.white, for: .normal)
-        signupButton.backgroundColor = Constants.blueBackgroundColor
-        signupButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 18)
-        signupButton.layer.cornerRadius = 8.0
-        signupButton.layer.masksToBounds = true
         signupButton.addTarget(self, action: #selector(signupButtonClicked), for: .touchUpInside)
         self.view.addSubview(signupButton)
     }

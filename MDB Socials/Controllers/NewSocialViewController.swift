@@ -49,13 +49,8 @@ class NewSocialViewController: UIViewController, UITextViewDelegate {
     
     func setupBackButton() {
         goBackButton = UIButton(frame: CGRect(x: 10, y: 25, width: 0.35 * UIScreen.main.bounds.width , height: 60))
-        goBackButton.layoutIfNeeded()
+        MDBSocialsUtils.defineButtonAttributes(button: goBackButton)
         goBackButton.setTitle("Go Back", for: .normal)
-        goBackButton.setTitleColor(.white, for: .normal)
-        goBackButton.backgroundColor = Constants.blueBackgroundColor
-        goBackButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 18)
-        goBackButton.layer.cornerRadius = 8.0
-        goBackButton.layer.masksToBounds = true
         goBackButton.addTarget(self, action: #selector(goBackButtonClicked), for: .touchUpInside)
         self.view.addSubview(goBackButton)
     }
@@ -69,13 +64,8 @@ class NewSocialViewController: UIViewController, UITextViewDelegate {
         self.view.addSubview(eventImage)
         
         newImageButton = UIButton(frame: CGRect(x: 0.37 * self.view.frame.width - 83, y: eventImage.frame.maxY + 6, width: 0.26 * UIScreen.main.bounds.width , height: 40))
-        newImageButton.layoutIfNeeded()
+        MDBSocialsUtils.defineButtonAttributes(button: newImageButton)
         newImageButton.setTitle("Set Image", for: .normal)
-        newImageButton.setTitleColor(.white, for: .normal)
-        newImageButton.backgroundColor = Constants.blueBackgroundColor
-        newImageButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 18)
-        newImageButton.layer.cornerRadius = 8.0
-        newImageButton.layer.masksToBounds = true
         newImageButton.addTarget(self, action: #selector(setImageButtonClicked), for: .touchUpInside)
         self.view.addSubview(newImageButton)
         

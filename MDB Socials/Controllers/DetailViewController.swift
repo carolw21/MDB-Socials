@@ -42,13 +42,8 @@ class DetailViewController: UIViewController {
     
     func setupBackButton() {
         goBackButton = UIButton(frame: CGRect(x: 10, y: 25, width: 0.35 * view.frame.width , height: 60))
-        goBackButton.layoutIfNeeded()
+        MDBSocialsUtils.defineButtonAttributes(button: goBackButton)
         goBackButton.setTitle("Go Back", for: .normal)
-        goBackButton.setTitleColor(.white, for: .normal)
-        goBackButton.backgroundColor = Constants.blueBackgroundColor
-        goBackButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 18)
-        goBackButton.layer.cornerRadius = 8.0
-        goBackButton.layer.masksToBounds = true
         goBackButton.addTarget(self, action: #selector(goBack), for: .touchUpInside)
         self.view.addSubview(goBackButton)
     }
@@ -107,7 +102,7 @@ class DetailViewController: UIViewController {
     
     func setupInterestedButton() {
         interestButton = UIButton(frame: CGRect(x: eventImage.frame.maxX + 8, y: descriptionText.frame.maxY + 20, width: 0.40 * UIScreen.main.bounds.width , height: 60))
-        interestButton.layoutIfNeeded()
+        MDBSocialsUtils.defineButtonAttributes(button: interestButton)
         let index = FeedViewController.events.index(where: { $0.id == event.id })
         let interested = FeedViewController.events[index!].rsvpArray.contains(FeedViewController.currentUser.name)
         if !interested {
@@ -116,11 +111,6 @@ class DetailViewController: UIViewController {
         else{
             interestButton.setTitle("Interested", for: .normal)
         }
-        interestButton.setTitleColor(.white, for: .normal)
-        interestButton.backgroundColor = Constants.blueBackgroundColor
-        interestButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 18)
-        interestButton.layer.cornerRadius = 8.0
-        interestButton.layer.masksToBounds = true
         interestButton.addTarget(self, action: #selector(interestButtonClicked), for: .touchUpInside)
         view.addSubview(interestButton)
     }

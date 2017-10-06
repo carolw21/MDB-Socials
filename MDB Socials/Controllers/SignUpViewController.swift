@@ -66,24 +66,14 @@ class SignUpViewController: UIViewController {
     
     func setupButtons() {
         goBackButton = UIButton(frame: CGRect(x: UIScreen.main.bounds.width * 0.15 - 5, y: passwordTextField.frame.maxY + 25, width: 0.35 * UIScreen.main.bounds.width , height: 60))
-        goBackButton.layoutIfNeeded()
+        MDBSocialsUtils.defineButtonAttributes(button: goBackButton)
         goBackButton.setTitle("Go Back", for: .normal)
-        goBackButton.setTitleColor(.white, for: .normal)
-        goBackButton.backgroundColor = Constants.blueBackgroundColor
-        goBackButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 18)
-        goBackButton.layer.cornerRadius = 8.0
-        goBackButton.layer.masksToBounds = true
         goBackButton.addTarget(self, action: #selector(goBackButtonClicked), for: .touchUpInside)
         self.view.addSubview(goBackButton)
         
         signupButton = UIButton(frame: CGRect(x: UIScreen.main.bounds.width * 0.5 + 5, y: passwordTextField.frame.maxY + 25, width: 0.35 * UIScreen.main.bounds.width , height: 60))
-        signupButton.layoutIfNeeded()
+        MDBSocialsUtils.defineButtonAttributes(button: signupButton)
         signupButton.setTitle("Sign Up", for: .normal)
-        signupButton.setTitleColor(.white, for: .normal)
-        signupButton.backgroundColor = Constants.blueBackgroundColor
-        signupButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 18)
-        signupButton.layer.cornerRadius = 8.0
-        signupButton.layer.masksToBounds = true
         signupButton.addTarget(self, action: #selector(signupButtonClicked), for: .touchUpInside)
         self.view.addSubview(signupButton)
         

@@ -72,13 +72,8 @@ class FeedViewController: UIViewController {
 
     func setupButton() {
         newEventButton = UIButton(frame: CGRect(x: UIScreen.main.bounds.width * 0.15, y: navBar.frame.maxY + 16, width: 0.75 * UIScreen.main.bounds.width , height: 60))
-        newEventButton.layoutIfNeeded()
+        MDBSocialsUtils.defineButtonAttributes(button: newEventButton)
         newEventButton.setTitle("Add new event", for: .normal)
-        newEventButton.setTitleColor(.white, for: .normal)
-        newEventButton.backgroundColor = Constants.blueBackgroundColor
-        newEventButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 18)
-        newEventButton.layer.cornerRadius = 8.0
-        newEventButton.layer.masksToBounds = true
         newEventButton.addTarget(self, action: #selector(goToAddEvent), for: .touchUpInside)
         self.view.addSubview(newEventButton)
     }
