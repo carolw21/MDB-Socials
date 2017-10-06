@@ -22,6 +22,7 @@
 		B3849ED51F78ECAC0048D747 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B3849ED31F78ECAC0048D747 /* LaunchScreen.storyboard */; };
 		B3849EE01F78ECAD0048D747 /* MDB_SocialsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3849EDF1F78ECAD0048D747 /* MDB_SocialsTests.swift */; };
 		B3849EEB1F78ECAD0048D747 /* MDB_SocialsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3849EEA1F78ECAD0048D747 /* MDB_SocialsUITests.swift */; };
+		B3BD47871F868D770015226F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BD47861F868D770015226F /* Constants.swift */; };
 		B3F8B1EF1F7C255D00EAC055 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B32F0EFC1F78F24800E76775 /* GoogleService-Info.plist */; };
 		B3F8B1F21F7C8A5F00EAC055 /* NewSocialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F8B1F11F7C8A5F00EAC055 /* NewSocialViewController.swift */; };
 		DCF3BFAEB46B8FC7600F4DD3 /* Pods_MDB_Socials.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AABAC89B0545E3A2E003BEBB /* Pods_MDB_Socials.framework */; };
@@ -72,6 +73,7 @@
 		B3849EE61F78ECAD0048D747 /* MDB SocialsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MDB SocialsUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3849EEA1F78ECAD0048D747 /* MDB_SocialsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDB_SocialsUITests.swift; sourceTree = "<group>"; };
 		B3849EEC1F78ECAD0048D747 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B3BD47861F868D770015226F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B3F8B1F11F7C8A5F00EAC055 /* NewSocialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewSocialViewController.swift; sourceTree = "<group>"; };
 		BA6F6317D4AD8791388DEA94 /* Pods-MDB SocialsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MDB SocialsUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MDB SocialsUITests/Pods-MDB SocialsUITests.release.xcconfig"; sourceTree = "<group>"; };
 		EB291A09CAC2063BBC988295 /* Pods_MDB_SocialsUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MDB_SocialsUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -153,6 +155,7 @@
 		B3849EC91F78ECAC0048D747 /* MDB Socials */ = {
 			isa = PBXGroup;
 			children = (
+				B3BD47861F868D770015226F /* Constants.swift */,
 				B3F8B1F01F7C73DE00EAC055 /* Views */,
 				B3F8B1EE1F7C209900EAC055 /* Controllers */,
 				B3F8B1ED1F7C207300EAC055 /* Models */,
@@ -518,6 +521,7 @@
 				B3F8B1F21F7C8A5F00EAC055 /* NewSocialViewController.swift in Sources */,
 				B32F0F061F78F6F600E76775 /* EventCollectionViewCell.swift in Sources */,
 				B32F0F081F78F6F600E76775 /* Event.swift in Sources */,
+				B3BD47871F868D770015226F /* Constants.swift in Sources */,
 				B32F0EFE1F78F6E800E76775 /* FeedViewController.swift in Sources */,
 				B3849ECB1F78ECAC0048D747 /* AppDelegate.swift in Sources */,
 				B32F0F051F78F6F600E76775 /* SignUpViewController.swift in Sources */,

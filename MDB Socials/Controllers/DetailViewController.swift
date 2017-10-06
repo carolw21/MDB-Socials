@@ -45,7 +45,7 @@ class DetailViewController: UIViewController {
         goBackButton.layoutIfNeeded()
         goBackButton.setTitle("Go Back", for: .normal)
         goBackButton.setTitleColor(.white, for: .normal)
-        goBackButton.backgroundColor = UIColor(red: 0, green: 157/255, blue: 1, alpha: 0.9)
+        goBackButton.backgroundColor = Constants.blueBackgroundColor
         goBackButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 18)
         goBackButton.layer.cornerRadius = 8.0
         goBackButton.layer.masksToBounds = true
@@ -63,7 +63,7 @@ class DetailViewController: UIViewController {
     }
     
     func setupEventText() {
-        eventTitle = UILabel(frame: CGRect(x: eventImage.frame.maxX + 10, y: eventImage.frame.minY, width: view.frame.width * 0.7, height: 30))
+        eventTitle = UILabel(frame: CGRect(x: eventImage.frame.maxX + 12, y: eventImage.frame.minY + 20, width: view.frame.width * 0.7, height: 30))
         eventTitle.textColor = UIColor.black
         eventTitle.font = UIFont(name: "AvenirNext-Regular", size: 23)
         eventTitle.text = event.title!
@@ -79,7 +79,7 @@ class DetailViewController: UIViewController {
     }
     
     func setupMemberText() {
-        memberName = UILabel(frame: CGRect(x: eventImage.frame.maxX + 10, y: eventDate.frame.maxY + 10, width: view.frame.width * 0.5, height: 30))
+        memberName = UILabel(frame: CGRect(x: eventImage.frame.maxX + 10, y: eventDate.frame.maxY + 5, width: view.frame.width * 0.5, height: 30))
         memberName.font = UIFont(name: "AvenirNext-Regular", size: 18)
         memberName.textColor = UIColor.black
         memberName.text = "by " + event.member!
@@ -87,15 +87,17 @@ class DetailViewController: UIViewController {
     }
     
     func setupDescriptionText() {
-        descriptionText = UILabel(frame: CGRect(x: eventImage.frame.maxX + 10, y: memberName.frame.maxY + 20, width: view.frame.width * 0.6, height: 30))
+        descriptionText = UILabel(frame: CGRect(x: 10, y: eventImage.frame.maxY + 5, width: view.frame.width * 0.9, height: 60))
         descriptionText.font = UIFont(name: "AvenirNext-Regular", size: 18)
         descriptionText.textColor = UIColor.black
+        descriptionText.numberOfLines = 2
+        descriptionText.lineBreakMode = .byWordWrapping
         descriptionText.text = event.descriptionText!
         view.addSubview(descriptionText)
     }
     
     func setupRsvpText() {
-        rsvpText = UILabel(frame: CGRect(x: eventImage.frame.minX + 10, y: descriptionText.frame.maxY + 35, width: view.frame.width * 0.3, height: 30))
+        rsvpText = UILabel(frame: CGRect(x: eventImage.frame.minX + 25, y: descriptionText.frame.maxY + 35, width: view.frame.width * 0.3, height: 30))
         rsvpText.textColor = UIColor.black
         rsvpText.font = UIFont(name: "AvenirNext-Regular", size: 18)
         rsvpText.adjustsFontForContentSizeCategory = true
@@ -115,7 +117,7 @@ class DetailViewController: UIViewController {
             interestButton.setTitle("Interested", for: .normal)
         }
         interestButton.setTitleColor(.white, for: .normal)
-        interestButton.backgroundColor = UIColor(red: 0, green: 180/255, blue: 1, alpha: 0.9)
+        interestButton.backgroundColor = Constants.blueBackgroundColor
         interestButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 18)
         interestButton.layer.cornerRadius = 8.0
         interestButton.layer.masksToBounds = true
@@ -125,23 +127,14 @@ class DetailViewController: UIViewController {
     
     @objc func interestButtonClicked() {
         let index = FeedViewController.events.index(where: { $0.id == event.id })
-        let interested = FeedViewController.events[index!].rsvpArray.contains((FeedViewController.currentUser?.name)!)
-        if !interested {
-            rsvpText.text = "Interested: \(event.rsvpCount!+1)"
-            FeedViewController.events[index!].rsvpCount! += 1
+        FeedViewController.events[index!].addInterestedUser()
+        rsvpText.text = "Interested: \(FeedViewController.events[index!].rsvpCount!)"
+        if FeedViewController.events[index!].rsvpArray.contains(FeedViewController.currentUser.id) {
             interestButton.setTitle("Interested", for: .normal)
-            FeedViewController.events[index!].rsvpArray.append((FeedViewController.currentUser?.name)!)
         }
         else {
-            rsvpText.text = "Interested: \(event.rsvpCount!-1)"
-            FeedViewController.events[index!].rsvpCount! -= 1
-            interestButton.setTitle("Mark interested", for: .normal)
-            FeedViewController.events[index!].rsvpArray.remove(at: FeedViewController.events[index!].rsvpArray.index(of: (FeedViewController.currentUser.name)!)!)
+            interestButton.setTitle("Mark Interested", for: .normal)
         }
-        FeedViewController.eventCollectionView.reloadData()
-        //upload changes to firebase
-        
-        Database.database().reference().child("Events").child(event.id).updateChildValues(["rsvpCount": FeedViewController.events[index!].rsvpCount!, "rsvpArray": FeedViewController.events[index!].rsvpArray])
     }
 
     @objc func goBack() {

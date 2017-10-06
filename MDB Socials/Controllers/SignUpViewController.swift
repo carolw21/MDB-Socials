@@ -69,7 +69,7 @@ class SignUpViewController: UIViewController {
         goBackButton.layoutIfNeeded()
         goBackButton.setTitle("Go Back", for: .normal)
         goBackButton.setTitleColor(.white, for: .normal)
-        goBackButton.backgroundColor = UIColor(red: 0, green: 157/255, blue: 1, alpha: 0.9)
+        goBackButton.backgroundColor = Constants.blueBackgroundColor
         goBackButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 18)
         goBackButton.layer.cornerRadius = 8.0
         goBackButton.layer.masksToBounds = true
@@ -80,7 +80,7 @@ class SignUpViewController: UIViewController {
         signupButton.layoutIfNeeded()
         signupButton.setTitle("Sign Up", for: .normal)
         signupButton.setTitleColor(.white, for: .normal)
-        signupButton.backgroundColor = UIColor(red: 0, green: 157/255, blue: 1, alpha: 0.9)
+        signupButton.backgroundColor = Constants.blueBackgroundColor
         signupButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 18)
         signupButton.layer.cornerRadius = 8.0
         signupButton.layer.masksToBounds = true

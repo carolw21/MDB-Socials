@@ -52,7 +52,7 @@ class NewSocialViewController: UIViewController, UITextViewDelegate {
         goBackButton.layoutIfNeeded()
         goBackButton.setTitle("Go Back", for: .normal)
         goBackButton.setTitleColor(.white, for: .normal)
-        goBackButton.backgroundColor = UIColor(red: 0, green: 157/255, blue: 1, alpha: 0.9)
+        goBackButton.backgroundColor = Constants.blueBackgroundColor
         goBackButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 18)
         goBackButton.layer.cornerRadius = 8.0
         goBackButton.layer.masksToBounds = true
@@ -72,7 +72,7 @@ class NewSocialViewController: UIViewController, UITextViewDelegate {
         newImageButton.layoutIfNeeded()
         newImageButton.setTitle("Set Image", for: .normal)
         newImageButton.setTitleColor(.white, for: .normal)
-        newImageButton.backgroundColor = UIColor(red: 0, green: 157/255, blue: 1, alpha: 0.9)
+        newImageButton.backgroundColor = Constants.blueBackgroundColor
         newImageButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 18)
         newImageButton.layer.cornerRadius = 8.0
         newImageButton.layer.masksToBounds = true
@@ -154,7 +154,7 @@ class NewSocialViewController: UIViewController, UITextViewDelegate {
         addButton.layoutIfNeeded()
         addButton.setTitle("Add event", for: .normal)
         addButton.setTitleColor(.white, for: .normal)
-        addButton.backgroundColor = UIColor(red: 0, green: 157/255, blue: 1, alpha: 0.9)
+        addButton.backgroundColor = Constants.blueBackgroundColor
         addButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 18)
         addButton.layer.cornerRadius = 8.0
         addButton.layer.masksToBounds = true
@@ -210,16 +210,17 @@ class NewSocialViewController: UIViewController, UITextViewDelegate {
         if let img = eventImage.image {
             let imageData = UIImageJPEGRepresentation(img, 0.9)
             let key = Database.database().reference().childByAutoId().key
-            let storage = Storage.storage().reference().child("EventPics/\(FeedViewController.currentUser.id)")
+            let storage = Storage.storage().reference().child("EventPics/\(key)")
             let metadata = StorageMetadata()
             metadata.contentType = "image/jpeg"
             
             storage.putData(imageData!, metadata: metadata) { metadata, error in
                 let downloadUrl = metadata!.downloadURL()?.absoluteString
-                let event = ["title": self.nameTextField.text!, "imageUrl": downloadUrl, "member": FeedViewController.currentUser.name!,
-                             "rsvpCount": 1, "rsvpArray": [FeedViewController.currentUser.name!], "descriptionText": self.descriptionTextView.text!, "date": self.textDatePicker.text!] as [String : Any]
+                let event = ["title": self.nameTextField.text!, "member": FeedViewController.currentUser.name!,
+                             "rsvpCount": 1, "rsvpArray": [FeedViewController.currentUser.name!], "imageUrl": downloadUrl, "descriptionText": self.descriptionTextView.text!, "date": self.textDatePicker.text!] as [String : Any]
                 let childUpdates = ["/Events/\(key)": event]
                 Database.database().reference().updateChildValues(childUpdates)
+                FeedViewController.eventCollectionView.reloadData()
                 self.dismiss(animated: true, completion: nil)
             }
         }

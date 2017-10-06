@@ -65,7 +65,7 @@ class FeedViewController: UIViewController {
         do {
             try firebaseAuth.signOut()
             performSegue(withIdentifier: "toLogin", sender: self)
-        } catch let _ as NSError {
+        } catch _ as NSError {
             self.showToast(message: "Error logging out.")
         }
     }
@@ -75,7 +75,7 @@ class FeedViewController: UIViewController {
         newEventButton.layoutIfNeeded()
         newEventButton.setTitle("Add new event", for: .normal)
         newEventButton.setTitleColor(.white, for: .normal)
-        newEventButton.backgroundColor = UIColor(red: 0, green: 157/255, blue: 1, alpha: 0.9)
+        newEventButton.backgroundColor = Constants.blueBackgroundColor
         newEventButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 18)
         newEventButton.layer.cornerRadius = 8.0
         newEventButton.layer.masksToBounds = true
@@ -106,32 +106,12 @@ class FeedViewController: UIViewController {
         //TODO: Implement a method to fetch events with Firebase!
         let ref = Database.database().reference()
         
-        var indexPaths = Array<IndexPath>()
-        
         ref.child("Events").observe(.childAdded, with: { (snapshot) in
             let event = Event(id: snapshot.key, eventDict: (snapshot.value! as? [String : Any])!)
-            FeedViewController.events.append(event)
-            //batch updates has some problems 
-            var index = FeedViewController.events.index(where: {$0.id == event.id})
-            
-            var indexPath: IndexPath!
-            
-            if let i = index {
-                indexPath = IndexPath(item: i, section: 0)
+            if !FeedViewController.events.contains(where: {$0.id == event.id}) {
+                FeedViewController.events.append(event)
             }
-            else {
-                index = 0
-                indexPath = IndexPath(item: 0, section: 0)
-            }
-            indexPaths.append(indexPath)
-            
-            DispatchQueue.main.async {
-                FeedViewController.eventCollectionView.performBatchUpdates({ () -> Void in
-                    FeedViewController.eventCollectionView.insertItems(at: indexPaths)
-                    self.itemCount += indexPaths.count
-                }, completion: nil)
-            }
-            withBlock()
+            FeedViewController.eventCollectionView.reloadData()
         })
     }
     
@@ -159,7 +139,7 @@ extension FeedViewController: UICollectionViewDelegate, UICollectionViewDataSour
         return 1
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return FeedViewController.events.count //itemCount ?
+        return FeedViewController.events.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = FeedViewController.eventCollectionView.dequeueReusableCell(withReuseIdentifier: "event", for: indexPath) as! EventCollectionViewCell
@@ -167,21 +147,19 @@ extension FeedViewController: UICollectionViewDelegate, UICollectionViewDataSour
             subview.removeFromSuperview()
         }
         cell.awakeFromNib()
-        let eventInQuestion = FeedViewController.events.reversed()[indexPath.row]
+        let eventInQuestion = FeedViewController.events[FeedViewController.events.count - indexPath.row - 1]
         cell.eventTitle.text = eventInQuestion.title!
         cell.memberName.text = "By: \(eventInQuestion.member!)"
         cell.rsvpText.text = "\(eventInQuestion.rsvpCount!) interested"
-        print(eventInQuestion.imageUrl)
-        do {
-            try cell.eventImage.image = UIImage(data: Data(contentsOf: URL(string: eventInQuestion.imageUrl)!))
-        } catch {
-            cell.eventImage.image = #imageLiteral(resourceName: "skydiving")
-        }
+        
+        eventInQuestion.getEventImage(withBlock: {
+            cell.eventImage.image = eventInQuestion.image
+        })
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        eventToPass = FeedViewController.events.reversed()[indexPath.row]
+        eventToPass = FeedViewController.events[indexPath.row]
         performSegue(withIdentifier: "toDetail", sender: self)
     }
     

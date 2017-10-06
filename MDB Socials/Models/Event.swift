@@ -17,11 +17,11 @@ class Event {
     var title: String! //name of event
     var date: String! //date of event
     var member: String! //member who posted event
-    var imageUrl: String! //points to image in storage
     var rsvpCount: Int! //how many people rsvp'ed to event
     var descriptionText: String! //short description of event
     var rsvpArray: [String]!
     var image: UIImage!
+    var imageUrl: String!
     
     init(id: String, eventDict: [String:Any]) {
         self.id = id
@@ -80,11 +80,27 @@ class Event {
                 withBlock()
             }*/
         do {
-            try self.image = UIImage(data: Data(contentsOf: URL(string: imageUrl)!))
-            withBlock()
+            try self.image = UIImage(data: Data(contentsOf: URL(string: self.imageUrl)!))
         } catch {
             self.image = #imageLiteral(resourceName: "skydiving")
         }
+        withBlock()
+    }
+    
+    func addInterestedUser() {
+        let interested = self.rsvpArray.contains((FeedViewController.currentUser?.name)!)
+        if !interested {
+            self.rsvpCount! += 1
+            self.rsvpArray.append((FeedViewController.currentUser?.name)!)
+        }
+        else {
+            self.rsvpCount! -= 1
+           self.rsvpArray.remove(at: self.rsvpArray.index(of: (FeedViewController.currentUser.name)!)!)
+        }
+        //upload changes to firebase
+        Database.database().reference().child("Events").child(self.id).updateChildValues(["rsvpCount": self.rsvpCount!, "rsvpArray": self.rsvpArray])
+       
+        FeedViewController.eventCollectionView.reloadData()
     }
     
 }

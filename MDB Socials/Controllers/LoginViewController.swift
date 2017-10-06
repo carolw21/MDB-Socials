@@ -67,7 +67,7 @@ class LoginViewController: UIViewController {
         loginButton.layoutIfNeeded()
         loginButton.setTitle("Log In", for: .normal)
         loginButton.setTitleColor(.white, for: .normal)
-        loginButton.backgroundColor = UIColor(red: 0, green: 157/255, blue: 1, alpha: 0.9)
+        loginButton.backgroundColor = Constants.blueBackgroundColor
         loginButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 18)
         loginButton.layer.cornerRadius = 8.0
         loginButton.layer.masksToBounds = true
@@ -78,7 +78,7 @@ class LoginViewController: UIViewController {
         signupButton.layoutIfNeeded()
         signupButton.setTitle("Sign Up", for: .normal)
         signupButton.setTitleColor(.white, for: .normal)
-        signupButton.backgroundColor = UIColor(red: 0, green: 157/255, blue: 1, alpha: 0.9)
+        signupButton.backgroundColor = Constants.blueBackgroundColor
         signupButton.titleLabel?.font = UIFont(name: "AvenirNext-Regular", size: 18)
         signupButton.layer.cornerRadius = 8.0
         signupButton.layer.masksToBounds = true
