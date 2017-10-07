@@ -24,10 +24,14 @@ class LoginViewController: UIViewController {
         setupTitle() //title of app
         setupTextFields() //email and password text fields for login
         setupButtons() //login and signup buttons
-        
-        //Checks if a user is already signed in, then the app automatically goes to the FeedVC
-        if Auth.auth().currentUser != nil {
-            performSegue(withIdentifier: "toFeedFromLogin", sender: self)
+    }
+    
+    func viewDidAppear() {
+        if let alreadySignedIn = Auth.auth().currentUser {
+            //Checks if a user is already signed in, then the app automatically goes to the FeedVC
+            if Auth.auth().currentUser != nil {
+                performSegue(withIdentifier: "toFeedFromLogin", sender: self)
+            }
         }
     }
     

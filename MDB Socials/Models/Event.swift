@@ -70,15 +70,6 @@ class Event {
     }
     
     func getEventImage(withBlock: @escaping () -> ()) {
-        //let ref = Storage.storage().reference().child("\(imageUrl)")
-        /*ref.getData(maxSize:  1 * 2048 * 2048, completion: { data, error in
-            if let error = error {
-                self.image = #imageLiteral(resourceName: "skydiving")
-            } else {
-                print(false)
-                self.image = UIImage(data: data!)
-                withBlock()
-            }*/
         do {
             try self.image = UIImage(data: Data(contentsOf: URL(string: self.imageUrl)!))
         } catch {
